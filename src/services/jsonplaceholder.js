@@ -13,7 +13,9 @@ const JSON_SERVICE = {
     },
     albums: async(id) => {
         return await service.get(`/users/${id}/albums`);
-
+    },
+    photos: async(id) => {
+        return await service.get(`/albums/${id}/photos`);
     },
     deletePost: async(id) => {
         return await service.delete(`/posts/${id}`);

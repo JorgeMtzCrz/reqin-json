@@ -3,21 +3,19 @@ import Navbar from '../../components/Navbar'
 import { Sidebar } from '../../components/Sidebar'
 import REQ_SERVICE from '../../services/reqin'
 import JSON_SERVICE from '../../services/jsonplaceholder'
-import handleAsync from '../../utils/handleAsync'
 import useForm from '../../hooks/useForm'
+import { animateScroll as scroll} from 'react-scroll'
 
 export const Home = () => {
-  const [form, handleInput, setForm] = useForm()
+  const [form, handleInput] = useForm()
   const [users, setUsers] = useState(null)
   const [user, setUser] = useState(null)
   const [posts, setPosts] = useState([])
   const [visibility, setVisibility] = useState(false)
 
-
-  
-
   const editUser = (id) =>{
     setVisibility(true)
+    scroll.scrollToTop();
     REQ_SERVICE.user(id)
     .then(({data:{data}})=> setUser(data))
     .catch(err => console.log(err.response))
@@ -37,6 +35,7 @@ export const Home = () => {
     setVisibility(false)
   }
 
+
   const deletePost = (id) =>{
     JSON_SERVICE.deletePost(id)
     .then(({data})=>{
@@ -47,7 +46,8 @@ export const Home = () => {
     .catch(err => console.log(err.response))
   }
 
-  const editData = (id) =>{
+  const editData = (e, id) =>{
+    e.preventDefault()
     const data ={
       ...form,
       id
@@ -65,8 +65,9 @@ export const Home = () => {
         }
         return e
       })
+      document.getElementById("user-form").reset()
       setUsers(usersUpdate)
-      setForm(null)
+      setUser(null)
       setVisibility(false)
     })
     .catch(err => console.log(err.response))

@@ -2,13 +2,11 @@ import React from 'react';
 import useForm from '../hooks/useForm'
 import REQ_SERVICE from '../services/reqin'
 import handleAsync from '../utils/handleAsync'
-import {Link, useHistory} from 'react-router-dom'
 import {useAuth} from '../AuthContext'
 import Swal from 'sweetalert2'
 
 export default function Login() {
   const [form, handleInput] = useForm()
-  const history = useHistory()
   const [,dispatch] = useAuth()
 
   const handleSubmit = async e =>{

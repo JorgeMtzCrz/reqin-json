@@ -3,34 +3,45 @@ import Navbar from '../../components/Navbar'
 import REQ_SERVICE from '../../services/reqin'
 import JSON_SERVICE from '../../services/jsonplaceholder'
 import { Modal } from '../../components/Modal'
+import { animateScroll as scroll} from 'react-scroll'
 
 export const Album = () => {
   const [users, setUsers] = useState(null)
   const [albums, setAlbums] = useState(null)
   const [visibility, setVisibility] = useState(false)
+  const [user, setUser] = useState(null)
 
   useEffect(()=>{
     REQ_SERVICE.users()
     .then(({data:{data}})=> setUsers(data))
     .catch(err => console.log(err))
+
   },[])
 
 
   const viewAlbum = (id) =>{
+
+    setVisibility(true)
+    scroll.scrollToTop();
     JSON_SERVICE.albums(id)
     .then(({data})=>{
       setAlbums(data)
     })
     .catch(err => console.log(err))
+    REQ_SERVICE.user(id)
+    .then(({data:{data}})=> setUser(data))
+    .catch(err => console.log(err.response))
   }
+
+  
   return (
-    <div>
+    <div id="top-albums">
     <Navbar/>
-      <div className="title">
+      <div className="title" >
         <h1>Albums</h1>
 
       </div>
-      <div className="container-cards">
+      <div className="container-cards" >
         {
           users?.map((e,i)=>{
             return(
@@ -42,7 +53,7 @@ export const Album = () => {
             )
           })
         }
-      <Modal visibility={visibility} albums={albums}/>
+      <Modal visibility={visibility} setVisibility={setVisibility} user={user} albums={albums} />
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 
 import {Link} from 'react-router-dom'
 import { useAuth } from '../AuthContext'
@@ -7,14 +7,7 @@ import { useAuth } from '../AuthContext'
 const Navbar = (props) => {
   const [, dispatch] = useAuth()
 
-  function myFunction() {
-    let x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-      x.className += "responsive";
-    } else {
-      x.className = "topnav";
-    }
-  }
+  
 
   const logout = async () => {
     localStorage.removeItem('token')

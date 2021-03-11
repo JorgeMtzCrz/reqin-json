@@ -9,9 +9,7 @@ export default function AuthApp(){
       <Switch>
         <Route exact path="/app/home" component={Home}/>
         <Route exact path="/app/album" component={Album}/>
-
-        <Redirect to="/app/home"/>
-      
+        <Redirect to="/app/home"/>   
       </Switch>
     </>
   )
